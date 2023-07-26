@@ -10,6 +10,7 @@ const JobSchema = new mongoose.Schema(
     experience: { type: String, required: true },
     qualification: { type: String, required: true },
     jobExpiration: { type: String, required: true },
+    location: { type: String, required: true },
     keywords: { type: Array, required: true },
     createdBy: {
       type: mongoose.Types.ObjectId,
