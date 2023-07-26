@@ -22,7 +22,7 @@ app.use(cors());
 
 // ROUTES
 app.get(`/`, (req, res) => {
-  res.send(`Sam Green Tips APi`);
+  res.send(`Dynamic Job Finder API`);
 });
 
 app.use(`/api/v1/auth`, authRouter);
