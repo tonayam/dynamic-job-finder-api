@@ -8,20 +8,29 @@ const {
   getAllEmployerJobs,
   getAllEmployerJobsAdmin,
 } = require(`../controllers/jobController`);
-const { authorizeRoles } = require('../middlewares/authentication');
+const {
+  authorizeRoles,
+  authenticateUser,
+} = require('../middlewares/authentication');
 
 router.get(`/`, getAllJobs);
 router.get(`/my-jobs`, authorizeRoles(`admin`, `employer`), getAllEmployerJobs);
 router.get(
+  authenticateUser,
   `/employer-jobs/:id`,
   authorizeRoles(`admin`),
   getAllEmployerJobsAdmin
 );
-router.post(`/`, authorizeRoles(`admin`, `employer`), createJob);
+router.post(
+  `/`,
+  authenticateUser,
+  authorizeRoles(`admin`, `employer`),
+  createJob
+);
 router
   .route(`/:id`)
-  .get(authorizeRoles(`admin`, `user`, `employer`), getSingleJob)
-  .patch(authorizeRoles(`admin`, `employer`), updateJob)
-  .delete(authorizeRoles(`admin`, `employer`), deleteJob);
+  .get(getSingleJob)
+  .patch(authenticateUser, authorizeRoles(`admin`, `employer`), updateJob)
+  .delete(authenticateUser, authorizeRoles(`admin`, `employer`), deleteJob);
 
 module.exports = router;
