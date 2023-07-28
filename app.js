@@ -27,7 +27,7 @@ app.get(`/`, (req, res) => {
 
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, authenticateUser, usersRouter);
-app.use(`/api/v1/jobs`, authenticateUser, jobsRouter);
+app.use(`/api/v1/jobs`, jobsRouter);
 
 // PAYSTACK WEBHOOK
 app.post(`/api/v1/webhook-url`, (req, res) => {
