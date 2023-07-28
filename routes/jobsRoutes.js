@@ -10,7 +10,7 @@ const {
 } = require(`../controllers/jobController`);
 const { authorizeRoles } = require('../middlewares/authentication');
 
-router.get(`/`, authorizeRoles(`admin`, `user`, `employer`), getAllJobs);
+router.get(`/`, getAllJobs);
 router.get(`/my-jobs`, authorizeRoles(`admin`, `employer`), getAllEmployerJobs);
 router.get(
   `/employer-jobs/:id`,
