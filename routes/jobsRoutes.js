@@ -16,8 +16,8 @@ const {
 router.get(`/`, getAllJobs);
 router.get(`/my-jobs`, authorizeRoles(`admin`, `employer`), getAllEmployerJobs);
 router.get(
-  authenticateUser,
   `/employer-jobs/:id`,
+  authenticateUser,
   authorizeRoles(`admin`),
   getAllEmployerJobsAdmin
 );

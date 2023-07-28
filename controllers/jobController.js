@@ -12,7 +12,7 @@ const createJob = async (req, res) => {
 
 // GET ALL JOBS
 const getAllJobs = async (req, res) => {
-  const jobs = await Job.find();
+  const jobs = await Job.find().sort({ createdAt: -1 });
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };
 
