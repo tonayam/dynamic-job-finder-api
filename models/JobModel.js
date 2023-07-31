@@ -13,12 +13,14 @@ const JobSchema = new mongoose.Schema(
     location: { type: String, required: true },
     keywords: { type: Array, required: true },
     createdBy: {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.ObjectId,
       ref: `User`,
       required: [true, 'Please provide user'],
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+  }
 );
 
 module.exports = mongoose.model('job', JobSchema);
