@@ -34,7 +34,7 @@ const getAllEmployerJobs = async (req, res) => {
 // GET SINGLE JOB
 const getSingleJob = async (req, res) => {
   const { id } = req.params;
-  const job = await Job.findOne({ _id: id });
+  const job = await Job.findOne({ _id: id }).populate(`job application`);
   if (!job) {
     throw new CustomError.NotFoundError(`Job with id:${id} not found`);
   }

@@ -14,10 +14,7 @@ const getAllJobApplications = async (req, res) => {
   const appliedJobs = await JobApplication.find({
     createdBy: req.user.userId,
   }).sort({ createdAt: -1 });
-  // .populate({
-  //   path: `job`,
-  //   select: `jobTitle`,
-  // });
+
   res.status(StatusCodes.OK).json({ appliedJobs, count: appliedJobs.length });
 };
 
