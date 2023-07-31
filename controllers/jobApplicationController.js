@@ -14,6 +14,7 @@ const createJobApplication = async (req, res) => {
       folder: `Dynamic-job-finder-resumes`,
     }
   );
+  fs.unlinkSync(req.files.resume.tempFilePath);
   const jobApplication = await JobApplication.create({
     ...req.body,
     createdBy: req.user.userId,
