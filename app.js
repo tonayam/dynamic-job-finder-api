@@ -11,6 +11,13 @@ const morgan = require('morgan');
 const cors = require(`cors`);
 const crypto = require(`crypto`);
 const connectDB = require(`./db/connect`);
+const fileUpload = require(`express-fileupload`);
+const cloudinary = require(`cloudinary`).v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_secret: process.env.CLOUD_SECRET,
+  api_key: process.env.CLOUD_KEY,
+});
 
 const authRouter = require(`./routes/authRoutes`);
 const usersRouter = require(`./routes/usersRoutes`);
@@ -20,6 +27,7 @@ const jobApplicationsRouter = require(`./routes/jobApplicationsRoutes`);
 app.use(express.json());
 app.use(morgan(`tiny`));
 app.use(cors());
+app.use(fileUpload({ useTempFiles: true }));
 
 // ROUTES
 app.get(`/`, (req, res) => {

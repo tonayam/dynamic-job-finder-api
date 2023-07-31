@@ -2,10 +2,23 @@ const JobApplication = require(`../models/JobApplicationModel`);
 const CustomError = require(`../errors`);
 const { StatusCodes } = require(`http-status-codes`);
 const checkPermissions = require(`../utils/checkPermissions`);
+const cloudinary = require(`cloudinary`).v2;
+const fs = require(`fs`);
 
 // CREATE JOB APPLICATION (USER)
 const createJobApplication = async (req, res) => {
-  const jobApplication = await JobApplication.create(req.body);
+  const result = await cloudinary.uploader.upload(
+    req.files.resume.tempFilePath,
+    {
+      use_filename: true,
+      folder: `Dynamic-job-finder-resumes`,
+    }
+  );
+  const jobApplication = await JobApplication.create({
+    ...req.body,
+    createdBy: req.user.userId,
+    resume: result.secure_url,
+  });
   res.status(StatusCodes.CREATED).json({ jobApplication });
 };
 
