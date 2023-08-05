@@ -23,6 +23,7 @@ const authRouter = require(`./routes/authRoutes`);
 const usersRouter = require(`./routes/usersRoutes`);
 const jobsRouter = require(`./routes/jobsRoutes`);
 const jobApplicationsRouter = require(`./routes/jobApplicationsRoutes`);
+const savedJobsRouter = require(`./routes/savedJobsRoutes`);
 
 app.use(express.json());
 app.use(morgan(`tiny`));
@@ -38,6 +39,7 @@ app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, authenticateUser, usersRouter);
 app.use(`/api/v1/jobs`, jobsRouter);
 app.use(`/api/v1/job-applications`, jobApplicationsRouter);
+app.use(`/api/v1/saved-jobs`, authenticateUser, savedJobsRouter);
 
 // PAYSTACK WEBHOOK
 app.post(`/api/v1/webhook-url`, (req, res) => {
