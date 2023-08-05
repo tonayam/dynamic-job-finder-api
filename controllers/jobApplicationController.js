@@ -30,7 +30,10 @@ const getAllJobApplications = async (req, res) => {
     createdBy: req.user.userId,
   })
     .sort({ createdAt: -1 })
-    .populate({ path: `job`, select: `jobTitle` });
+    .populate({
+      path: `job`,
+      select: `jobTitle location companyName createdAt`,
+    });
 
   res.status(StatusCodes.OK).json({ appliedJobs, count: appliedJobs.length });
 };
