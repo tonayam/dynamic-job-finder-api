@@ -29,7 +29,7 @@ const getAllSavedJobs = async (req, res) => {
 // GET SINGLE SAVED JOB
 const getSingleJobApplication = async (req, res) => {
   const { id } = req.params;
-  const job = await JobApplication.findOne({ _id: id });
+  const job = await SavedJob.findOne({ _id: id });
   if (!job) {
     throw new CustomError.NotFoundError(`Job with id:${id} not found`);
   }
@@ -39,12 +39,12 @@ const getSingleJobApplication = async (req, res) => {
 // UPDATE SINGLE SAVED JOB
 const updateJobApplication = async (req, res) => {
   const { id: jobId } = req.params;
-  const job = await Job.findOne({ _id: jobId });
+  const job = await SavedJob.findOne({ _id: jobId });
   if (!job) {
     throw new CustomError.NotFoundError(`Job with id:${jobId} not found`);
   }
   checkPermissions(req.user, job.createdBy);
-  const updatedJob = await Job.findOneAndUpdate({ _id: jobId }, req.body, {
+  const updatedJob = await SavedJob.findOneAndUpdate({ _id: jobId }, req.body, {
     runValidators: true,
     new: true,
   });
@@ -56,12 +56,12 @@ const updateJobApplication = async (req, res) => {
 // DELETE SINGLE SAVED JOB
 const deleteJobApplication = async (req, res) => {
   const { id } = req.params;
-  const job = await Job.findOne({ _id: id });
+  const job = await SavedJob.findOne({ _id: id });
   if (!job) {
     throw new CustomError.NotFoundError(`Job with id:${id} not found`);
   }
   checkPermissions(req.user, job.createdBy);
-  const deletedJob = await Job.findOneAndDelete({ _id: id });
+  const deletedJob = await SavedJob.findOneAndDelete({ _id: id });
   res.status(StatusCodes.OK).json({ msg: `Job successfully deleted` });
 };
 

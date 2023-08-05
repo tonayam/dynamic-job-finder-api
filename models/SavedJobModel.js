@@ -1,6 +1,6 @@
 const mongoose = require(`mongoose`);
 
-const JobApplicationSchema = new mongoose.Schema(
+const SavedJobSchema = new mongoose.Schema(
   {
     job: {
       type: mongoose.Schema.ObjectId,
@@ -23,4 +23,4 @@ const JobApplicationSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model(`Job Application`, JobApplicationSchema);
+module.exports = mongoose.model(`Saved Job`, SavedJobSchema);
