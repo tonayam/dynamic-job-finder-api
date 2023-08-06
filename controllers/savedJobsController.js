@@ -54,14 +54,14 @@ const updateJobApplication = async (req, res) => {
 };
 
 // DELETE SINGLE SAVED JOB
-const deleteJobApplication = async (req, res) => {
+const deleteSavedJob = async (req, res) => {
   const { id } = req.params;
   const job = await SavedJob.findOne({ _id: id });
   if (!job) {
     throw new CustomError.NotFoundError(`Job with id:${id} not found`);
   }
   checkPermissions(req.user, job.createdBy);
-  const deletedJob = await SavedJob.findOneAndDelete({ _id: id });
+  await SavedJob.findOneAndDelete({ _id: id });
   res.status(StatusCodes.OK).json({ msg: `Job successfully deleted` });
 };
 
@@ -70,5 +70,5 @@ module.exports = {
   getAllSavedJobs,
   getSingleJobApplication,
   updateJobApplication,
-  deleteJobApplication,
+  deleteSavedJob,
 };

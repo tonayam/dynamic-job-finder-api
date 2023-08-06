@@ -1,7 +1,7 @@
 const router = require(`express`).Router();
 const {
   createSavedJob,
-  deleteJobApplication,
+  deleteSavedJob,
   getAllSavedJobs,
   getSingleJobApplication,
   updateJobApplication,
@@ -29,7 +29,7 @@ router
   .delete(
     authenticateUser,
     authorizeRoles(`admin`, `employer`, `user`),
-    deleteJobApplication
+    deleteSavedJob
   );
 
 module.exports = router;
