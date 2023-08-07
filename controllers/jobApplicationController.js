@@ -4,6 +4,7 @@ const { StatusCodes } = require(`http-status-codes`);
 const checkPermissions = require(`../utils/checkPermissions`);
 const cloudinary = require(`cloudinary`).v2;
 const fs = require(`fs`);
+const path = require('path');
 
 // CREATE JOB APPLICATION (USER)
 const createJobApplication = async (req, res) => {
@@ -27,7 +28,12 @@ const createJobApplication = async (req, res) => {
 const getAllJobApplications = async (req, res) => {
   const appliedJobs = await JobApplication.find({
     createdBy: req.user.userId,
-  }).sort({ createdAt: -1 });
+  })
+    .sort({ createdAt: -1 })
+    .populate({
+      path: `job`,
+      select: `jobTitle location companyName createdAt`,
+    });
 
   res.status(StatusCodes.OK).json({ appliedJobs, count: appliedJobs.length });
 };
