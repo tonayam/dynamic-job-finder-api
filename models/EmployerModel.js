@@ -4,9 +4,9 @@ const jwt = require(`jsonwebtoken`);
 const validator = require(`validator`);
 
 const EmployerSchema = new mongoose.Schema({
-  name: {
+  companyName: {
     type: String,
-    required: [true, `Please provide name`],
+    required: [true, `Please provide company name`],
   },
   password: {
     type: String,
@@ -26,7 +26,10 @@ const EmployerSchema = new mongoose.Schema({
     type: String,
     default: `employer`,
   },
-  companyDesc: { type: String },
+  companyDesc: {
+    type: String,
+    required: [true, `Please provide company brief`],
+  },
 });
 
 EmployerSchema.pre(`save`, async function () {
