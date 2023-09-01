@@ -1,6 +1,5 @@
 const mongoose = require(`mongoose`);
 const bcrypt = require(`bcryptjs`);
-const jwt = require(`jsonwebtoken`);
 const validator = require(`validator`);
 
 const EmployerSchema = new mongoose.Schema({
@@ -30,11 +29,16 @@ const EmployerSchema = new mongoose.Schema({
     type: String,
     required: [true, `Please provide company brief`],
   },
+  isSubscribed: { type: Boolean, default: false },
+  primaryIndustry: { type: String },
+  industryCategory: { type: String },
+  location: { type: String },
+  noOfEmployees: { type: String },
 });
 
 EmployerSchema.pre(`save`, async function () {
   const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
+  this.password = bcrypt.hash(this.password, salt);
 });
 
 EmployerSchema.methods.comparePassword = async function (incomingPassword) {

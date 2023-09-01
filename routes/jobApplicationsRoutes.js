@@ -5,6 +5,7 @@ const {
   getAllJobApplications,
   getSingleJobApplication,
   updateJobApplication,
+  getAllJobApplicationsEmployer,
 } = require(`../controllers/jobApplicationController`);
 const {
   authorizeRoles,
@@ -25,11 +26,13 @@ router.get(
   getAllJobApplications
 );
 
+router.get(`/my-jobs`, authenticateUser, getAllJobApplicationsEmployer);
+
 router
   .route(`/:id`)
   .get(
     authenticateUser,
-    authorizeRoles(`user`, `admin`, `employer`),
+    authorizeRoles(`admin`, `employer`, `user`),
     getSingleJobApplication
   )
   .patch(

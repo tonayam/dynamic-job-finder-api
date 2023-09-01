@@ -77,10 +77,28 @@ const deleteJobApplication = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: `Job successfully deleted` });
 };
 
+// GET ALL JOB APPLICATIONS (EMPLOYER)
+const getAllJobApplicationsEmployer = async (req, res) => {
+  const totalApplications = await JobApplication.find({
+    employer: req.user.userId,
+  })
+    .sort({ createdAt: -1 })
+    .select(`-employer`)
+    .populate({
+      path: `job`,
+      select: `jobTitle`,
+    });
+
+  res
+    .status(StatusCodes.OK)
+    .json({ totalApplications, count: totalApplications.length });
+};
+
 module.exports = {
   createJobApplication,
   getAllJobApplications,
   getSingleJobApplication,
   updateJobApplication,
   deleteJobApplication,
+  getAllJobApplicationsEmployer,
 };

@@ -26,7 +26,16 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: `user`,
   },
-  companyDesc: { type: String },
+  employmentStatus: { type: String, enum: [`employed`, `unemployed`] },
+  preferredJobTitle: { type: String },
+  desiredJobLocation: { type: String },
+  openToRemoteWork: { type: Boolean, default: false },
+  currentLocation: { type: String },
+  currentCompany: { type: String },
+  currentJobTitle: { type: String },
+  githubLink: { type: String },
+  portfolioLink: { type: String },
+  linkendinLink: { type: String },
 });
 
 UserSchema.pre(`save`, async function () {

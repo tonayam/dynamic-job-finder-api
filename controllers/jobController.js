@@ -25,8 +25,6 @@ const getAllEmployerJobsAdmin = async (req, res) => {
 
 // GET ALL JOBS CREATED BY EMPLOYER
 const getAllEmployerJobs = async (req, res) => {
-  const job = await Job.findOne({ createdBy: req.user.userId });
-  checkPermissions(req.user, job.createdBy);
   const jobs = await Job.find({ createdBy: req.user.userId });
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length });
 };

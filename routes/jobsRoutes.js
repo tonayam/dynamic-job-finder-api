@@ -14,7 +14,7 @@ const {
 } = require('../middlewares/authentication');
 
 router.get(`/`, getAllJobs);
-router.get(`/my-jobs`, authorizeRoles(`admin`, `employer`), getAllEmployerJobs);
+router.get(`/my-jobs`, authenticateUser, getAllEmployerJobs);
 router.get(
   `/employer-jobs/:id`,
   authenticateUser,

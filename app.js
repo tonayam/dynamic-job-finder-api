@@ -21,6 +21,7 @@ cloudinary.config({
 
 const authRouter = require(`./routes/authRoutes`);
 const usersRouter = require(`./routes/usersRoutes`);
+const employersRouter = require(`./routes/employerRoutes`);
 const jobsRouter = require(`./routes/jobsRoutes`);
 const jobApplicationsRouter = require(`./routes/jobApplicationsRoutes`);
 const savedJobsRouter = require(`./routes/savedJobsRoutes`);
@@ -37,6 +38,7 @@ app.get(`/`, (req, res) => {
 
 app.use(`/api/v1/auth`, authRouter);
 app.use(`/api/v1/users`, authenticateUser, usersRouter);
+app.use(`/api/v1/employers`, authenticateUser, employersRouter);
 app.use(`/api/v1/jobs`, jobsRouter);
 app.use(`/api/v1/job-applications`, jobApplicationsRouter);
 app.use(`/api/v1/saved-jobs`, authenticateUser, savedJobsRouter);

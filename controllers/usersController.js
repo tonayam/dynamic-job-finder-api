@@ -29,7 +29,6 @@ const updateUser = async (req, res) => {
   }
   checkPermissions(req.user, user._id);
   const updatedUser = await User.findOneAndUpdate({ _id: id }, req.body, {
-    runValidators: true,
     new: true,
   }).select(`-password`);
   res
@@ -48,4 +47,16 @@ const deleteUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: `User successfully deleted` });
 };
 
-module.exports = { getAllUsers, getSingleUser, updateUser, deleteUser };
+// GET UPDATED USER DETAILS
+const getUpdatedUserInfo = async (req, res) => {
+  const user = await User.findOne({ _id: req.user.userId }).select(`-password`);
+  res.status(StatusCodes.OK).json(user);
+};
+
+module.exports = {
+  getAllUsers,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+  getUpdatedUserInfo,
+};
