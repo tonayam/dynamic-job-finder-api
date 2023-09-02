@@ -5,11 +5,13 @@ const {
   getSingleUser,
   updateUser,
   getUpdatedUserInfo,
+  updateUserPassword,
 } = require(`../controllers/usersController`);
 const { authorizeRoles } = require('../middlewares/authentication');
 
 router.get(`/`, authorizeRoles(`admin`), getAllUsers);
 router.get(`/show-me`, getUpdatedUserInfo);
+router.post(`/update-password`, updateUserPassword);
 
 router
   .route(`/:id`)

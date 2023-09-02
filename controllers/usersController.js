@@ -2,6 +2,7 @@ const User = require(`../models/UserModel`);
 const CustomError = require(`../errors/`);
 const { StatusCodes } = require(`http-status-codes`);
 const checkPermissions = require(`../utils/checkPermissions`);
+const bcrypt = require(`bcryptjs`);
 
 // GET ALL USERS
 const getAllUsers = async (req, res) => {
@@ -53,10 +54,30 @@ const getUpdatedUserInfo = async (req, res) => {
   res.status(StatusCodes.OK).json(user);
 };
 
+// UPDATE USER PASSWORD
+const updateUserPassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) {
+    throw new CustomError.NotFoundError(`Please provide old and new password`);
+  }
+  const user = await User.findOne({ _id: req.user.userId });
+  if (!user) {
+    throw new CustomError.NotFoundError(`User with id:${id} not found`);
+  }
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new CustomError.UnauthenticatedError(`Incorrect Password`);
+  }
+  user.password = newPassword;
+  await user.save();
+  res.status(StatusCodes.OK).json({ msg: `Password Updated` });
+};
+
 module.exports = {
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteUser,
   getUpdatedUserInfo,
+  updateUserPassword,
 };

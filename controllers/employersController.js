@@ -59,10 +59,31 @@ const getUpdatedEmployerInfo = async (req, res) => {
   res.status(StatusCodes.OK).json(employer);
 };
 
+// UPDATE EMPLOYER PASSWORD
+const updateEmployerPassword = async (req, res) => {
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) {
+    throw new CustomError.NotFoundError(`Please provide old and new password`);
+  }
+  const employer = await Employer.findOne({ _id: req.user.userId });
+  if (!employer) {
+    throw new CustomError.NotFoundError(`Employer with id:${id} not found`);
+  }
+
+  const isPasswordCorrect = await employer.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new CustomError.UnauthenticatedError(`Incorrect Password`);
+  }
+  employer.password = newPassword;
+  await employer.save();
+  res.status(StatusCodes.OK).json({ msg: `Password Updated` });
+};
+
 module.exports = {
   getAllEmployers,
   getSingleEmployer,
   deleteEmployer,
   updateEmployer,
   getUpdatedEmployerInfo,
+  updateEmployerPassword,
 };

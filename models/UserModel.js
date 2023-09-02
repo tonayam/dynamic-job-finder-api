@@ -27,6 +27,8 @@ const UserSchema = new mongoose.Schema({
     default: `user`,
   },
   employmentStatus: { type: String, enum: [`employed`, `unemployed`] },
+  primaryIndustry: { type: String },
+  industryCategory: { type: String },
   preferredJobTitle: { type: String },
   desiredJobLocation: { type: String },
   openToRemoteWork: { type: Boolean, default: false },

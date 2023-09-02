@@ -5,11 +5,13 @@ const {
   getSingleEmployer,
   getUpdatedEmployerInfo,
   updateEmployer,
+  updateEmployerPassword,
 } = require(`../controllers/employersController`);
 const { authorizeRoles } = require('../middlewares/authentication');
 
 router.get(`/`, authorizeRoles(`admin`), getAllEmployers);
 router.get(`/show-me`, getUpdatedEmployerInfo);
+router.post(`/update-password`, updateEmployerPassword);
 
 router
   .route(`/:id`)
